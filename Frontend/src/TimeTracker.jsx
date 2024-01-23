@@ -27,9 +27,9 @@ export default function TimeTracker() {
 
     try {
       if (isTracking) {
-        await axios.post("http://localhost:4000/stopHomeOffice");
+        await axios.post("http://localhost:4000/stop");
       } else {
-        await axios.post("http://localhost:4000/startHomeOffice");
+        await axios.post("http://localhost:4000/start");
       }
       setIsTracking(!isTracking);
     } catch (err) {
