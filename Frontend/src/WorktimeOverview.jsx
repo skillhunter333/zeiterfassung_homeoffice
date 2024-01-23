@@ -11,11 +11,18 @@ export default function WorktimeOverview({ onToggleOverview }) {
     setDate(newDate);
 
     //Datum im Format YYYY-MM-DD
-    const dateString = newDate.toISOString().split("T")[0];
+    const dateString =
+      newDate.getFullYear() +
+      "-" +
+      ("0" + (newDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + newDate.getDate()).slice(-2);
+
     try {
       const response = await axios.get(
         `http://localhost:4000/overview?date=${dateString}`
       );
+      console.log("Erhaltene Arbeitszeiten:", response.data);
       setWorktime(response.data);
     } catch (error) {
       console.error("Fehler beim Abrufen der Arbeitszeiten:", error);
