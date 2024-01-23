@@ -36,6 +36,51 @@ const userController = {
     next(error);
   }
     },
+
+       startHomeOffice: async (req, res) => {
+        try {
+            const userId = req.user._id; 
+            const user = await UserCollection.findById(userId);
+
+            // Prüfen ob letzter Arbeitszeitblock noch offen
+            if (user.worktime.length > 0) {
+                const lastBlock = user.worktime[user.worktime.length - 1];
+                if (!lastBlock.end) {
+                    return res.status(400).send('Es existiert bereits ein offener Arbeitszeitblock.');
+                }
+            }
+
+            // Hinzufügen neuer Arbeitszeitblock
+            user.worktime.push({ start: new Date() });
+            await user.save();
+
+            res.status(200).send('Arbeitszeit erfolgreich gestartet.');
+        } catch (error) {
+            res.status(500).send('Serverfehler beim Starten der Arbeitszeit.');
+        }
+    },
+    
+    //mailFunktion muss noch eingefügt werden
+
+    stopHomeOffice: async (req, res) => {
+        try {
+            const userId = req.user._id;
+            const user = await UserCollection.findById(userId);
+
+            // Prüfen ob offener Arbeitszeitblock vorhanden 
+            if (user.worktime.length === 0 || user.worktime[user.worktime.length - 1].end) {
+                return res.status(400).send('Kein offener Arbeitszeitblock vorhanden.');
+            }
+
+            // Endzeitpunkt für aktuellen Arbeitszeitblock
+            user.worktime[user.worktime.length - 1].end = new Date();
+            await user.save();
+
+            res.status(200).send('Arbeitszeit erfolgreich beendet.');
+        } catch (error) {
+            res.status(500).send('Serverfehler beim Beenden der Arbeitszeit.');
+        }
+    },
 };
 
 module.exports = userController;
