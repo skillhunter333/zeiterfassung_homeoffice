@@ -15,6 +15,9 @@ router.route('/checkCurrentTracking').get(isAuthenticated, userController.checkC
 // Stop HomeOffice-Zeit
 router.route('/stop').post(isAuthenticated, userController.stopHomeOffice);
 
+// Arbeitszeiten-Übersicht
+router.route('/overview').get(isAuthenticated, userController.getTimeOverview);
+
 
 
 module.exports = router;

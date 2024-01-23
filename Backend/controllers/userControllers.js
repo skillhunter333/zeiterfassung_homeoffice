@@ -28,8 +28,8 @@ const userController = {
       .cookie("token", token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 12, //Cookie verfällt nach 12h 
-        sameSite: "none",
-        secure: true,
+        sameSite: "lax", //none, lax für dev
+        secure: false, ///für dev über http
       })
       .sendStatus(200);
   } catch (error) {
@@ -97,7 +97,31 @@ const userController = {
         } catch (error) {
             res.status(500).send('Fehler beim Abrufen des Tracking-Status');
         }
-    }
+    },
+
+    getTimeOverview: async (req, res) => {
+        try {
+            const userId = req.user._id;
+            const date = new Date(req.query.date); // Datum aus dem Query-Parameter
+            if (isNaN(date)) {
+                return res.status(400).send('Ungültiges Datum.');
+            }
+
+            const nextDay = new Date(date);
+            nextDay.setDate(nextDay.getDate() + 1);
+
+            const user = await UserCollection.findById(userId);
+            const worktimesOnDate = user.worktime.filter(block => {
+                return block.start >= date && block.start < nextDay;
+            });
+
+            res.status(200).json(worktimesOnDate);
+        } catch (error) {
+            res.status(500).send('Fehler beim Abrufen der Arbeitszeiten.');
+        }
+    },
+
+    
 };
 
 module.exports = userController;
