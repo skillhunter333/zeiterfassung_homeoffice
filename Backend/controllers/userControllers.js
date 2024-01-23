@@ -81,6 +81,23 @@ const userController = {
             res.status(500).send('Serverfehler beim Beenden der Arbeitszeit.');
         }
     },
+
+    checkCurrentTracking: async (req, res) => {
+        try {
+            const userId = req.user._id; 
+            const user = await UserCollection.findById(userId);
+
+            if (!user) {
+                return res.status(404).send('Benutzer nicht gefunden');
+            }
+
+            const isTracking = user.worktime.length > 0 && !user.worktime[user.worktime.length - 1].end;
+
+            res.status(200).json({ isTracking });
+        } catch (error) {
+            res.status(500).send('Fehler beim Abrufen des Tracking-Status');
+        }
+    }
 };
 
 module.exports = userController;

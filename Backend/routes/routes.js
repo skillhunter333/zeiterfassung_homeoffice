@@ -9,6 +9,9 @@ router.route('/login').post(userController.login);
 // Start HomeOffice-Zeit
 router.route('/start').post(isAuthenticated, userController.startHomeOffice);
 
+// Prüfung ob eine Arbeitszeit momentan läuft
+router.route('/checkCurrentTracking').get(isAuthenticated, userController.checkCurrentTracking);
+
 // Stop HomeOffice-Zeit
 router.route('/stop').post(isAuthenticated, userController.stopHomeOffice);
 
