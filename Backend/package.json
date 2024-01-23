@@ -1,0 +1,24 @@
+{
+  "name": "backend_zeiterfassung_homeoffice",
+  "version": "1.0.0",
+  "description": "app to track time worked remotely",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skillhunter333/zeiterfassung_homeoffice.git"
+  },
+  "author": "skillhunter333",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skillhunter333/zeiterfassung_homeoffice/issues"
+  },
+  "homepage": "https://github.com/skillhunter333/zeiterfassung_homeoffice#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.0"
+  }
+}
