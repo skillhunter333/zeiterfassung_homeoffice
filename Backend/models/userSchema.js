@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+// Schema Arbeitszeitblock
+const worktimeSchema = new Schema({
+    start: {
+        type: Date,
+        required: true
+    },
+    end: {
+        type: Date
+    }
+}, { _id: false });
+
+// User komplett
+
 const userSchema = new Schema({
     username: {
         type: String,
@@ -21,7 +34,8 @@ const userSchema = new Schema({
     lastName: {
         type: String,
         default: null
-    }
+    },
+    worktime: [worktimeSchema]
 });
 
 const UserCollection = mongoose.model('User', userSchema);
