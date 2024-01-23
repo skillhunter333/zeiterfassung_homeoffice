@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import axios from "axios";
 import "react-calendar/dist/Calendar.css";
+import { ImArrowLeft } from "react-icons/im";
 
 export default function WorktimeOverview({ onToggleOverview }) {
   const [date, setDate] = useState(new Date());
@@ -31,6 +32,10 @@ export default function WorktimeOverview({ onToggleOverview }) {
 
   return (
     <div>
+      <button onClick={onToggleOverview}>
+        <ImArrowLeft /> Start/Stop
+      </button>
+      <h3>Datum wählen</h3>
       <Calendar onChange={handleDateChange} value={date} />
       <div>
         {worktime.map((time, index) => (
@@ -40,7 +45,6 @@ export default function WorktimeOverview({ onToggleOverview }) {
           </div>
         ))}
       </div>
-      <button onClick={onToggleOverview}>Zurück</button>
     </div>
   );
 }
