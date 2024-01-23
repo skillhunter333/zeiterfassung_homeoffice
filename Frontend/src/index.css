@@ -24,10 +24,11 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 320px;
 }
 
 h1 {
@@ -51,7 +52,31 @@ button:hover {
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 8px auto -webkit-focus-ring-color;
+}
+
+#start {
+  font-size: 10em;
+  padding: 0.5em;
+  border: black;
+  color: green;
+  cursor: pointer;
+}
+
+#stop {
+    font-size: 10em;
+    padding: 0.5em;
+    border: black;
+    color: red;
+    cursor: pointer;
+}
+
+#start:disabled,
+#stop:disabled {
+  opacity: 0.5;
+  /* Halbtransparent, wenn deaktiviert */
+  cursor: not-allowed;
+  /* Cursor ändern, wenn Button deaktiviert ist */
 }
 
 @media (prefers-color-scheme: light) {

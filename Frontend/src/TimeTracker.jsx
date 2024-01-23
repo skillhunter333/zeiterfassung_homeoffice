@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { IoPlayCircleOutline, IoStopCircleOutline } from "react-icons/io5";
 
 export default function TimeTracker() {
   const [isTracking, setIsTracking] = useState(false);
@@ -22,18 +23,25 @@ export default function TimeTracker() {
     checkCurrentTrackingStatus();
   }, []);
 
-  const handleStartStop = async () => {
-    if (isLoading) return;
+  const handleStart = async () => {
+    if (isLoading || isTracking) return;
 
     try {
-      if (isTracking) {
-        await axios.post("http://localhost:4000/stop");
-      } else {
-        await axios.post("http://localhost:4000/start");
-      }
-      setIsTracking(!isTracking);
+      await axios.post("http://localhost:4000/start");
+      setIsTracking(true);
     } catch (err) {
-      console.error("Fehler bei der Zeitverfolgung:", err);
+      console.error("Fehler beim Starten:", err);
+    }
+  };
+
+  const handleStop = async () => {
+    if (isLoading || !isTracking) return;
+
+    try {
+      await axios.post("http://localhost:4000/stop");
+      setIsTracking(false);
+    } catch (err) {
+      console.error("Fehler beim Stoppen:", err);
     }
   };
 
@@ -42,9 +50,14 @@ export default function TimeTracker() {
       {isLoading ? (
         <p>Lädt...</p>
       ) : (
-        <button onClick={handleStartStop}>
-          {isTracking ? "Stop" : "Start"}
-        </button>
+        <>
+          <button id="start" onClick={handleStart} disabled={isTracking}>
+            <IoPlayCircleOutline />
+          </button>
+          <button id="stop" onClick={handleStop} disabled={!isTracking}>
+            <IoStopCircleOutline />
+          </button>
+        </>
       )}
     </div>
   );
