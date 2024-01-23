@@ -4,6 +4,7 @@ const UserCollection = require("../models/userSchema");
 const ErrorStatus = require("../utils/errorStatus");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sendStoptimeEmail = require('../utils/mailService');
 
 
 const userController = {
@@ -60,7 +61,7 @@ const userController = {
         }
     },
     
-    //mailFunktion muss noch eingefügt werden
+    
 
     stopHomeOffice: async (req, res) => {
         try {
@@ -75,6 +76,11 @@ const userController = {
             // Endzeitpunkt für aktuellen Arbeitszeitblock
             user.worktime[user.worktime.length - 1].end = new Date();
             await user.save();
+
+            await sendStoptimeEmail(
+            user.username,
+            new Date()
+            );
 
             res.status(200).send('Arbeitszeit erfolgreich beendet.');
         } catch (error) {
