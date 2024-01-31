@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 async function hashPassword() {
-  const plaintextpw = 'whiterabbit1'; 
+  const plaintextpw = ''; 
 
   try {
     const salt = await bcrypt.genSalt(10);

@@ -29,8 +29,8 @@ const userController = {
       .cookie("token", token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 12, //Cookie verfällt nach 12h 
-        sameSite: "lax", //none, lax für dev
-        secure: false, ///für dev über http
+        sameSite: "none", //none, lax für dev
+        secure: true, ///für dev über http false
       })
       .sendStatus(200);
   } catch (error) {
@@ -126,6 +126,25 @@ const userController = {
             res.status(500).send('Fehler beim Abrufen der Arbeitszeiten.');
         }
     },
+
+   getUserName: async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await UserCollection.findById(userId);
+
+    if (!user) {
+      return res.status(404).send('Benutzer nicht gefunden');
+    }
+    const displayName = `${user.firstName} ${user.lastName}`;
+
+    res.status(200).json({
+      displayName
+    });
+  } catch (error) {
+    res.status(500).send('Fehler beim Abrufen der Benutzerdaten');
+  }
+},
+
 
     
 };

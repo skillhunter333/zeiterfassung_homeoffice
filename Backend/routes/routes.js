@@ -18,6 +18,9 @@ router.route('/stop').post(isAuthenticated, userController.stopHomeOffice);
 // Arbeitszeiten-Übersicht
 router.route('/overview').get(isAuthenticated, userController.getTimeOverview);
 
+// User-Name
+router.route('/username').get(isAuthenticated, userController.getUserName)
+
 
 
 module.exports = router;
