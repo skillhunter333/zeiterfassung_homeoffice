@@ -29,11 +29,12 @@ const userSchema = new Schema({
     },
     firstName: {
         type: String,
-        default: null
+        required: true,
     },
     lastName: {
         type: String,
-        default: null
+        default: null,
+        required: true
     },
     worktime: [worktimeSchema]
 });
