@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Login from "./Login";
 import TimeTracker from "./TimeTracker";
 import WorktimeOverview from "./WorktimeOverview";
+import Wrapper from "./Wrapper";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,18 +13,17 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {!isLoggedIn ? (
-        <Login onLogin={() => setIsLoggedIn(true)} />
-      ) : showOverview ? (
-        <WorktimeOverview onToggleOverview={handleToggleOverview} />
-      ) : (
-        <>
+    <Wrapper>
+      <div className="App">
+        {!isLoggedIn ? (
+          <Login onLogin={() => setIsLoggedIn(true)} />
+        ) : showOverview ? (
+          <WorktimeOverview onToggleOverview={handleToggleOverview} />
+        ) : (
           <TimeTracker onToggleOverview={handleToggleOverview} />
-          <button onClick={handleToggleOverview}>Übersicht</button>
-        </>
-      )}
-    </div>
+        )}
+      </div>
+    </Wrapper>
   );
 }
 

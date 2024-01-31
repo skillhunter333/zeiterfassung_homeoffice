@@ -13,31 +13,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+html, body {
   margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     min-width: 320px;
+    height: 100%;
+}
+
+.App {
+  height: 100%;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 1.5em;
   line-height: 1.1;
+  color: #1a1f7a;
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 2px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -74,10 +71,40 @@ button:focus-visible {
 #start:disabled,
 #stop:disabled {
   opacity: 0.5;
-  /* Halbtransparent, wenn deaktiviert */
   cursor: not-allowed;
-  /* Cursor ändern, wenn Button deaktiviert ist */
+  color: darkgrey;
 }
+
+.ansicht-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ansicht-header {
+  padding: 10px;
+}
+
+.ansicht-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  /* Abstand zwischen den Button-Gruppen */
+}
+
+.overview-button {
+  width: 20em;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -85,7 +112,7 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #1a1f7a;
   }
   button {
     background-color: #f9f9f9;

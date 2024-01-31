@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { IoPlayCircleOutline, IoStopCircleOutline } from "react-icons/io5";
 
-export default function TimeTracker() {
+export default function TimeTracker({ onToggleOverview }) {
   const [isTracking, setIsTracking] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -10,7 +10,7 @@ export default function TimeTracker() {
     const checkCurrentTrackingStatus = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/checkCurrentTracking"
+          `${import.meta.env.VITE_API_URL}/checkCurrentTracking`
         );
         setIsTracking(response.data.isTracking);
         setIsLoading(false);
@@ -27,7 +27,7 @@ export default function TimeTracker() {
     if (isLoading || isTracking) return;
 
     try {
-      await axios.post("http://localhost:4000/start");
+      await axios.post(`${import.meta.env.VITE_API_URL}/start`);
       setIsTracking(true);
     } catch (err) {
       console.error("Fehler beim Starten:", err);
@@ -38,7 +38,7 @@ export default function TimeTracker() {
     if (isLoading || !isTracking) return;
 
     try {
-      await axios.post("http://localhost:4000/stop");
+      await axios.post(`${import.meta.env.VITE_API_URL}/stop`);
       setIsTracking(false);
     } catch (err) {
       console.error("Fehler beim Stoppen:", err);
@@ -46,19 +46,29 @@ export default function TimeTracker() {
   };
 
   return (
-    <div>
-      {isLoading ? (
-        <p>Lädt...</p>
-      ) : (
-        <>
-          <button id="start" onClick={handleStart} disabled={isTracking}>
-            <IoPlayCircleOutline />
-          </button>
-          <button id="stop" onClick={handleStop} disabled={!isTracking}>
-            <IoStopCircleOutline />
-          </button>
-        </>
-      )}
+    <div className="ansicht-container">
+      <div className="ansicht-header">
+        <h1>HomeOffice CheckIn - {isTracking ? "Stop" : "Start"}</h1>
+      </div>
+      <div className="ansicht-content">
+        {isLoading ? (
+          <p>Lädt...</p>
+        ) : (
+          <>
+            <div className="button-group">
+              <button id="start" onClick={handleStart} disabled={isTracking}>
+                <IoPlayCircleOutline />
+              </button>
+              <button id="stop" onClick={handleStop} disabled={!isTracking}>
+                <IoStopCircleOutline />
+              </button>
+            </div>
+            <button className="overview-button" onClick={onToggleOverview}>
+              Übersicht
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
